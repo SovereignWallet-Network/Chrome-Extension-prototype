@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "MetaMUI Wallet",
+    "version": "1.0.0",
+    "description": "prototype wallet",
+    
+   
+    
+    "action": {
+      "default_popup": "index.html",
+      
+      "default_title": "MetaMUI Wallet"
+    },
+    
+    
+    
+   
+    
+    "permissions": [
+      "storage",
+      "alarms",
+      "notifications",
+      "activeTab"
+    ],
+    
+    "host_permissions": [
+      "https://api.avax.network/*",
+      "https://api.avax-test.network/*",
+      "wss://localhost:8443/*",
+      "wss://bridge.metamui.io/*"
+    ],
+    
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+  }
