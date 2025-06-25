@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import { RoutePaths } from "../../utils/Routing/route";
+import { RoutePaths } from "../../../utils/Routing/route";
 
 const WelcomeScreen = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const WelcomeScreen = () => {
 
       {/* Buttons */}
       <div style={styles.buttonContainer}>
-        <button style={{ ...styles.button, ...styles.primary }} onClick={() => navigate('/create')}>
+        <button style={{ ...styles.button, ...styles.primary }} onClick={() => navigate(RoutePaths.CREATE_WALLET)}>
            Create New Wallet
         </button>
         <button style={{ ...styles.button, ...styles.outlined }} onClick={() => navigate(RoutePaths.IMPORTWALLET)} >

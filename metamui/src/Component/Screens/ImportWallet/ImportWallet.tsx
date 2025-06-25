@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { RoutePaths } from '../../utils/Routing/route';
+import { RoutePaths } from '../../../utils/Routing/route';
 
 const ImportWallet = () => {
     const navigate = useNavigate();
