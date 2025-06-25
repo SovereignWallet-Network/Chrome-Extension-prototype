@@ -4,33 +4,42 @@
     "version": "1.0.0",
     "description": "prototype wallet",
     
-   
-    
     "action": {
-      "default_popup": "index.html",
-      
-      "default_title": "MetaMUI Wallet"
+        "default_popup": "index.html",
+        "default_title": "MetaMUI Wallet"
     },
     
-    
-    
-   
-    
     "permissions": [
-      "storage",
-      "alarms",
-      "notifications",
-      "activeTab"
+        "storage",
+        "alarms",
+        "notifications",
+        "activeTab"
     ],
     
     "host_permissions": [
-      "https://api.avax.network/*",
-      "https://api.avax-test.network/*",
-      "wss://localhost:8443/*",
-      "wss://bridge.metamui.io/*"
+        "https://api.avax.network/*",
+        "https://api.avax-test.network/*"
+    ],
+    
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/*",
+                "*.js",
+                "*.css",
+                "*.woff",
+                "*.woff2",
+                "*.ttf",
+                "*.svg",
+                "*.png",
+                "*.jpg",
+                "*.jpeg"
+            ],
+            "matches": ["<all_urls>"]
+        }
     ],
     
     "content_security_policy": {
-      "extension_pages": "script-src 'self'; object-src 'self'"
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline';"
     }
-  }
+}
