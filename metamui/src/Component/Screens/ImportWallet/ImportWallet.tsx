@@ -1,40 +1,64 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { RoutePaths } from '../../../utils/Routing/route';
 
+const formatSeedPhrase = (input: string) => {
+    const words = input.trim().split(/\s+/);
+    return words.reduce((acc, word, idx) => {
+        return acc + word + ((idx + 1) % 3 === 0 ? '\n' : ' ');
+    }, '').trim();
+};
+
 const ImportWallet = () => {
     const navigate = useNavigate();
+    const [seedPhrase, setSeedPhrase] = useState('');
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const rawInput = e.target.value.replace(/\n/g, ' ');
+        const formatted = formatSeedPhrase(rawInput);
+        setSeedPhrase(formatted);
+    };
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    }, [seedPhrase]);
 
     return (
         <div style={styles.container}>
-            
             <div style={styles.header}>
-                <button 
-                    style={styles.backButton} 
+                <button
+                    style={styles.backButton}
                     onClick={() => navigate(RoutePaths.WELCOME)}
                 >
                     ← Back
                 </button>
             </div>
 
-            
             <h1 style={styles.title}>Import Wallet</h1>
             <p style={styles.subtitle}>Enter your seed phrase to import your existing wallet</p>
 
-            
             <div style={styles.content}>
-                <textarea 
+                <textarea
+                    ref={textareaRef}
                     style={styles.textarea}
                     placeholder="Enter your 12 or 24 word seed phrase..."
-                    rows={4}
+                    value={seedPhrase}
+                    onChange={handleInput}
                 />
-                
+
                 <button style={styles.importButton}>
                     Import Wallet
                 </button>
+
+                <button style={styles.importButton}>
+                    Use Passkey
+                </button>
             </div>
 
-           
             <p style={styles.footerText}>
                 Make sure you're in a secure environment
             </p>
@@ -48,17 +72,15 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        height: '100dvh',
         textAlign: 'center',
         padding: '24px',
         boxSizing: 'border-box',
-        overflow: 'hidden',
     },
     header: {
         width: '100%',
         display: 'flex',
         justifyContent: 'flex-start',
-        marginBottom: '40px',
+        marginBottom: '16px', // reduced from 40px
     },
     backButton: {
         background: 'none',
@@ -76,7 +98,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     },
     subtitle: {
         marginTop: 0,
-        marginBottom: 32,
+        marginBottom: 24,
         color: '#666',
         fontSize: '14px',
     },
@@ -93,7 +115,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         border: '2px solid #ddd',
         borderRadius: 8,
         resize: 'none',
-        fontFamily: 'inherit',
+        fontFamily: 'monospace',
+        overflow: 'hidden',
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
+        minHeight: 60,
     },
     importButton: {
         padding: '12px',
@@ -105,7 +131,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         border: 'none',
     },
     footerText: {
-        marginTop: 'auto',
+        marginTop: 32,
         paddingTop: 12,
         fontSize: '12px',
         color: '#999',
